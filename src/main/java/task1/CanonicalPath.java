@@ -2,10 +2,9 @@ package task1;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Stack;
 
-public class Main {
+public class CanonicalPath {
     public static void main(String[] args) {
         String path = "/home//gs/gh/..//hdd//";
         String[] buf = path.split("/");
@@ -17,7 +16,6 @@ public class Main {
     public static String canonicalPath(String path) {
         String[] buf = path.split("/");
         StringBuilder buf_string = new StringBuilder("");
-        List<String> buf_list = new ArrayList<>();
         Stack<String> stack_path = new Stack<>();
         for (String word : buf) {
             if (!word.equals("") && !word.equals(" ") && !word.equals(".")) {
@@ -33,6 +31,7 @@ public class Main {
                     if (!stack_path.empty()) {
                         String rem = stack_path.pop();
                     }
+                    continue;
                 }
                 stack_path.push(word);
             }
@@ -41,11 +40,8 @@ public class Main {
             return "/";
         }
         while (!stack_path.empty()) {
-            buf_list.add(stack_path.pop());
-            buf_list.add("/");
-        }
-        for (int i = buf_list.size() - 1; i >= 0; i--) {
-            buf_string.append(buf_list.get(i));
+            buf_string.insert(0, stack_path.pop());
+            buf_string.insert(0,"/");
         }
         return buf_string.toString();
     }
