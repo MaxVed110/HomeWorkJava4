@@ -4,7 +4,8 @@ import java.util.*;
 
 public class ValidParentheses {
     public static void main(String[] args) {
-
+        String test = "()((";
+        System.out.println(Valid(test));
     }
 
     public static boolean Valid(String s) {
@@ -25,15 +26,11 @@ public class ValidParentheses {
             }
             if(directory.get(check_valid.peek()).equals(item)){
                 String remove = check_valid.pop();
-                continue;
             }
             else{
                 return false;
             }
         }
-        if(check_valid.empty()){
-            return true;
-        }
-        return false;
+        return check_valid.empty();
     }
 }
