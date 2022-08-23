@@ -6,7 +6,9 @@ import java.util.Stack;
 public class InfixToPostfix {
     public static void main(String[] args) {
         String infix = "((2+3)*(4+5))*2";
-        System.out.println(infixToPostfix(infix));
+        String postfix = infixToPostfix(infix);
+        System.out.println(postfixCalculation(postfix));
+
     }
 
     public static String infixToPostfix(String infix) {
@@ -46,5 +48,41 @@ public class InfixToPostfix {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    public static double postfixCalculation(String postfix) {
+        Stack<String> buf = new Stack<>();
+        double result = 0;
+        double a = 0;
+        double b = 0;
+
+        for (String item : postfix.split("")) {
+            if (isNumeric(item)) {
+                buf.push(item);
+            } else {
+                if (item.equals("+")) {
+                    result = Double.parseDouble(buf.pop()) + Double.parseDouble(buf.pop());
+                    buf.push(Double.toString(result));
+                }
+                if (item.equals("-")) {
+                    a = Double.parseDouble(buf.pop());
+                    b = Double.parseDouble(buf.pop());
+                    result = b - a;
+                    buf.push(Double.toString(result));
+                }
+                if (item.equals("*")) {
+                    result = Double.parseDouble(buf.pop()) * Double.parseDouble(buf.pop());
+                    buf.push(Double.toString(result));
+                }
+                if (item.equals("/")) {
+                    a = Double.parseDouble(buf.pop());
+                    b = Double.parseDouble(buf.pop());
+                    result = b / a;
+                    buf.push(Double.toString(result));
+                }
+            }
+        }
+        result = Double.parseDouble(buf.pop());
+        return result;
     }
 }
