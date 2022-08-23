@@ -1,36 +1,39 @@
 package task2;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
+
+import org.jetbrains.annotations.NotNull;
 
 public class ValidParentheses {
     public static void main(String[] args) {
         String test = "()((";
-        System.out.println(Valid(test));
+        System.out.println(valid(test));
     }
 
-    public static boolean Valid(String s) {
+    public static boolean valid(@NotNull String s) {
         Map<String, String> directory = new HashMap<>();
         directory.put("(", ")");
         directory.put("[", "]");
         directory.put("{", "}");
 
-        Stack<String> check_valid = new Stack<>();
+        Stack<String> checkValid = new Stack<>();
 
         for (String item : s.split("")) {
             if (directory.containsKey(item)) {
-                check_valid.push(item);
+                checkValid.push(item);
                 continue;
             }
-            if (directory.containsValue(item) && check_valid.empty()){
+            if (directory.containsValue(item) && checkValid.empty()) {
                 return false;
             }
-            if(directory.get(check_valid.peek()).equals(item)){
-                String remove = check_valid.pop();
-            }
-            else{
+            if (directory.get(checkValid.peek()).equals(item)) {
+                String remove = checkValid.pop();
+            } else {
                 return false;
             }
         }
-        return check_valid.empty();
+        return checkValid.empty();
     }
 }
